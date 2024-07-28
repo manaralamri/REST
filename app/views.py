@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Lesson, Student, Teacher, Assignment, Attendance, Grade
-from .serializers import LessonSerializer, StudentSerializer, TeacherSerializer, AssignmentSerializer, AttendanceSerializer, GradeSerializer
+from .serializers import ChangePasswordSerializer, LessonSerializer, StudentSerializer, TeacherSerializer, AssignmentSerializer, AttendanceSerializer, GradeSerializer
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
@@ -135,3 +135,19 @@ def user_logout(request):
            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    if request.method == 'POST':
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            user = request.user
+            if not user.check_password(serializer.validated_data.get('old_password')):
+                return Response({'old_password': 'Wrong password.'}, status=status.HTTP_400_BAD_REQUEST)
+            user.set_password(serializer.validated_data.get('new_password'))
+            user.save()
+            return Response({'message': 'Password successfully changed.'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'error': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
