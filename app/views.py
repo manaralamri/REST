@@ -1,31 +1,16 @@
-
-from .serializers import UserSerializer
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
-from .models import CustomUser
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Lesson, Student, Teacher, Assignment, Attendance, Grade
-from .serializers import ChangePasswordSerializer, LessonSerializer, StudentSerializer, TeacherSerializer, AssignmentSerializer, AttendanceSerializer, GradeSerializer
-from rest_framework import generics
-from rest_framework import mixins
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from .serializers import UserSerializer
-from django.contrib.auth import authenticate
-from django.core.exceptions import ObjectDoesNotExist
-from .models import CustomUser
+from rest_framework import status, generics, mixins, viewsets
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
+
+from .models import CustomUser,Admin, Lesson, Student, Teacher, Assignment, Attendance, Grade
+from .serializers import AdminSerializer,UserSerializer, ChangePasswordSerializer, LessonSerializer, StudentSerializer, TeacherSerializer, AssignmentSerializer, AttendanceSerializer, GradeSerializer
 
 
 class LessonViewSet(viewsets.ModelViewSet):
@@ -65,6 +50,9 @@ class GradeViewSet(viewsets.ModelViewSet):
     serializer_class = GradeSerializer
     queryset = Grade.objects.all()
 
+class AdminViewSet(viewsets.ModelViewSet):
+    serializer_class = AdminSerializer
+    queryset = Admin.objects.all()
 
 
 @api_view(['POST'])

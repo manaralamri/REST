@@ -6,11 +6,13 @@ from .views import *
 from rest_framework.routers import DefaultRouter 
 
 router = DefaultRouter()
-router.register('Lesson', LessonViewSet, basename='lesson')
+router.register('Admin', AdminViewSet, basename='Admin')
+router.register('Teacher', TeacherViewSet, basename='Teacher')
 router.register('Student', StudentViewSet, basename='Student')
+
+router.register('Lesson', LessonViewSet, basename='lesson')
 router.register('Assignment', AssignmentViewSet, basename='Assignment')
 
-router.register('Teacher', TeacherViewSet, basename='Teacher')
 router.register('Attendance', AttendanceViewSet, basename='Attendance')
 router.register('Grade', GradeViewSet, basename='Grade')
 

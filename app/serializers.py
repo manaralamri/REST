@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import Lesson, Student, Teacher, Assignment, Attendance, Grade, CustomUser
+from .models import Lesson,Admin, Student, Teacher, Assignment, Attendance, Grade, CustomUser
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -32,7 +32,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         model = Attendance 
         fields = '__all__'
 
-class GradeSerializer(serializers.ModelSerializer):
+class GradeSerializer(serializers.ModelSerializer):  
 
     class Meta:
         model = Grade 
@@ -40,6 +40,11 @@ class GradeSerializer(serializers.ModelSerializer):
 
 
 
+class AdminSerializer(serializers.ModelSerializer):  
+
+    class Meta:
+        model = Admin 
+        fields = '__all__'
 
 
 
